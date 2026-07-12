@@ -1,5 +1,7 @@
 # Sunshine Atlas — open dataset
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21322408.svg)](https://doi.org/10.5281/zenodo.21322408)
+
 Monthly **0–100 Sunshine Scores**, day/night temperatures, rainfall and sea
 temperature for **3,833 destinations worldwide** — every one of them served by
 its own airport (one primary airport per metro area; London appears once, not
