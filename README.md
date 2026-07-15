@@ -5,7 +5,28 @@
 Monthly **0–100 Sunshine Scores**, day/night temperatures, rainfall and sea
 temperature for **3,833 destinations worldwide** — every one of them served by
 its own airport (one primary airport per metro area; London appears once, not
-five times). Built from long-term climate normals, not forecasts.
+five times). Built from NASA POWER's 2001–2020 climate normals, not forecasts.
+
+## Provenance
+
+Every value is either a measurement from the sources listed at the bottom of
+this file, or computed from them by a formula documented on the
+[methodology page](https://sunshineatlas.com/methodology/). **Nothing in this
+dataset is written, estimated or filled in by a language model.**
+
+Three honest caveats, so you can judge fitness for your own use:
+
+- **`annual_sunshine_hours` is modelled, not observed.** It comes from NASA
+  POWER's all-sky clearness index via the Ångström–Prescott relation, not from
+  a sunshine recorder. Validated against 404 published national met-service
+  figures: **r = 0.92, mean absolute error 212 h/yr, bias +22 h/yr.** It reads
+  high where persistent low marine cloud or dust sits under a satellite's view
+  — Lima and Cape Verde are the clearest cases, both ~35–40% over — and low in
+  the perpetually-overcast Sichuan basin. This is a known limitation of
+  satellite-derived sunshine (Kothe et al. 2017, *Remote Sensing* 9(5), 429).
+- **`sea_temp_c` is a single year (2024)**, not a normal like everything else.
+- **`climate` and `destination_type` are rule-based classifications**, not
+  source fields. `sunshine_score_*` is an opinionated index, not a measurement.
 
 This is a mirror of the canonical dataset at
 **[sunshineatlas.com/data](https://sunshineatlas.com/data/)**, which regenerates
@@ -16,7 +37,7 @@ with every site build. The interactive version is the
 
 | File | Contents |
 |---|---|
-| `sunshine-atlas-destinations.csv` | One row per destination: IATA code, city, country, continent, coordinates, elevation, population, annual sunshine hours, rainy days, climate band, destination type, best month, and the Sunshine Score for the year + all 12 months. |
+| `sunshine-atlas-destinations.csv` | One row per destination: IATA code, city, country, continent, coordinates, elevation, population, annual sunshine hours, annual rainfall (mm), climate band, destination type, best month, and the Sunshine Score for the year + all 12 months. |
 | `sunshine-atlas-monthly-climate.csv` | One row per destination-month (~46,000 rows): Sunshine Score, average day high °C, night low °C, rainfall mm, and sea-surface temperature °C for coastal places. |
 | `sunshine-atlas-destinations.json` | Everything above as one JSON array, monthly values as arrays. |
 
@@ -57,13 +78,18 @@ journalism and apps. Credit **Sunshine Atlas** and link to
 > Sunshine Atlas (2026). *Monthly sunshine scores and climate normals for
 > 3,833 destinations.* sunshineatlas.com/data/
 
-Upstream sources: climate normals from CRU climatology; places & populations
-© [GeoNames](https://www.geonames.org/) & OurAirports (CC BY); sea
-temperatures via [Open-Meteo](https://open-meteo.com/) (CC BY 4.0).
+Upstream sources: temperature, rainfall and sunshine from
+[NASA POWER](https://power.larc.nasa.gov/) climatology, January 2001 –
+December 2020 (CC BY 4.0); places & populations ©
+[GeoNames](https://www.geonames.org/) & OurAirports (CC BY); elevations from
+the Copernicus DEM via [Open-Meteo](https://open-meteo.com/); sea temperatures
+via Open-Meteo Marine (CC BY 4.0). Every upstream source permits commercial
+use and redistribution, so this CC BY 4.0 grant carries no hidden conditions —
+pass those credits along and you're done.
 
 ## Versioning
 
-This mirror is the **2026.07 edition**. Climate normals change rarely, so
+This mirror is the **2026.08 edition**. Climate normals change rarely, so
 mirrored editions refresh only when the underlying data does; the canonical
 files at [sunshineatlas.com/data](https://sunshineatlas.com/data/) regenerate
 with every site build and are always current. Spotted an oddity? Open an
