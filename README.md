@@ -81,7 +81,10 @@ journalism and apps. Credit **Sunshine Atlas** and link to
 Upstream sources: temperature, rainfall and sunshine from
 [NASA POWER](https://power.larc.nasa.gov/) climatology, January 2001 –
 December 2020 (CC BY 4.0); places & populations ©
-[GeoNames](https://www.geonames.org/) & OurAirports (CC BY); elevations from
+[GeoNames](https://www.geonames.org/) & OurAirports (CC BY), with manual
+name/population corrections where an airport's host municipality differs from
+the destination it serves (island, region and metro labels use commonly-quoted
+census figures); elevations from
 the Copernicus DEM via [Open-Meteo](https://open-meteo.com/); sea temperatures
 via Open-Meteo Marine (CC BY 4.0). Every upstream source permits commercial
 use and redistribution, so this CC BY 4.0 grant carries no hidden conditions —
@@ -89,7 +92,13 @@ pass those credits along and you're done.
 
 ## Versioning
 
-This mirror is the **2026.08 edition**. Climate normals change rarely, so
+This mirror is the **2026.09 edition**. It corrects **118 destination names**
+where the record carried the airport's host municipality instead of the
+destination it serves (Gaziemir → Izmir, Årø → Molde, Ciudad de la Costa →
+Montevideo, Beringin → Medan…) and **146 population figures** that described a
+catchment or neighbouring city rather than the named place (Trenton no longer
+shows New York's 19M). Page `url`s are unchanged. Climate values are identical
+to 2026.08. Climate normals change rarely, so
 mirrored editions refresh only when the underlying data does; the canonical
 files at [sunshineatlas.com/data](https://sunshineatlas.com/data/) regenerate
 with every site build and are always current. Spotted an oddity? Open an
