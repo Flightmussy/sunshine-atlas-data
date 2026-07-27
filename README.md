@@ -4,8 +4,9 @@
 
 Monthly **0–100 Sunshine Scores**, day/night temperatures, rainfall and sea
 temperature for **3,833 destinations worldwide** — every one of them served by
-its own airport (one primary airport per metro area; London appears once, not
-five times). Built from NASA POWER's 2001–2020 climate normals, not forecasts.
+its own airport (one primary airport per metro area, so London is Heathrow and
+Southend rather than all five fields; see *Nine metros appear twice* below).
+Built from NASA POWER's 2001–2020 climate normals, not forecasts.
 
 ## Provenance
 
@@ -37,11 +38,26 @@ with every site build. The interactive version is the
 
 | File | Contents |
 |---|---|
-| `sunshine-atlas-destinations.csv` | One row per destination: IATA code, city, country, continent, coordinates, elevation, population, annual sunshine hours, annual rainfall (mm), climate band, destination type, best month, and the Sunshine Score for the year + all 12 months. |
-| `sunshine-atlas-monthly-climate.csv` | One row per destination-month (~46,000 rows): Sunshine Score, average day high °C, night low °C, rainfall mm, and sea-surface temperature °C for coastal places. |
+| `sunshine-atlas-destinations.csv` | One row per destination: IATA code, city, country, continent, coordinates, elevation, population, annual sunshine hours, annual rainfall (mm), peak midday UV index, climate band, destination type, best month, and the Sunshine Score for the year + all 12 months. |
+| `sunshine-atlas-monthly-climate.csv` | One row per destination-month (~46,000 rows): Sunshine Score, average day high °C, night low °C, rainfall mm, midday UV index, and sea-surface temperature °C for coastal places. |
 | `sunshine-atlas-destinations.json` | Everything above as one JSON array, monthly values as arrays. |
 
 Join key across files: `iata` (the destination's primary airport).
+
+### Nine metros appear twice
+
+The rule is one primary airport per metro, but nine metros genuinely run two
+airports far enough apart to sit in different climate cells, so they hold two
+rows sharing a `city` value. Deduplicate on the first of each pair if you need
+one row per place:
+
+`LHR`/`SEN` London · `GLA`/`PIK` Glasgow · `MEL`/`MEB` Melbourne ·
+`SEA`/`PAE` Seattle · `YUL`/`YHU` Montréal · `KEF`/`RKV` Reykjavík ·
+`MMY`/`SHI` Miyakojima · `ULV`/`ULY` Ulyanovsk · `BZI`/`EDO` Balıkesir
+
+Cities that merely share a **name** are not duplicates and carry a qualifier —
+`Portland` (Oregon) vs `Portland (Maine)`, `Victoria (Seychelles)` vs
+`Victoria (British Columbia)`. They are distinct places with distinct `iata`.
 
 ## Quick start
 
@@ -92,7 +108,20 @@ pass those credits along and you're done.
 
 ## Versioning
 
-This mirror is the **2026.09 edition**. It corrects **118 destination names**
+This mirror is the **2026.10 edition**. It adds a **midday UV index** — peak
+value per destination in `sunshine-atlas-destinations.csv`, and per
+destination-month in `sunshine-atlas-monthly-climate.csv` and the JSON — on the
+WHO scale, derived from the same NASA POWER climatology as everything else.
+It also **disambiguates 22 destinations that shared a name with a different
+place**: `Portland (Maine)` is now distinct from Portland, Oregon, and likewise
+Victoria (Seychelles)/(British Columbia), London (Ontario), Birmingham
+(Alabama), Manchester (New Hampshire), St. Petersburg (Florida), Kochi (Japan),
+Jackson Hole, Hamilton Island and the rest. Two labels were also corrected to
+the place the airport actually serves: `RUN` Sainte-Marie → Saint-Denis
+(Réunion), `SMS` Sainte-Marie → Île Sainte-Marie. No `iata` changed, so joins
+and page `url`s are unaffected, and climate values are identical to 2026.09.
+
+The 2026.09 edition corrected **118 destination names**
 where the record carried the airport's host municipality instead of the
 destination it serves (Gaziemir → Izmir, Årø → Molde, Ciudad de la Costa →
 Montevideo, Beringin → Medan…) and **146 population figures** that described a
