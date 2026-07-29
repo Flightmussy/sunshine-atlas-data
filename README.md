@@ -15,7 +15,7 @@ this file, or computed from them by a formula documented on the
 [methodology page](https://sunshineatlas.com/methodology/). **Nothing in this
 dataset is written, estimated or filled in by a language model.**
 
-Three honest caveats, so you can judge fitness for your own use:
+Four honest caveats, so you can judge fitness for your own use:
 
 - **`annual_sunshine_hours` is modelled, not observed.** It comes from NASA
   POWER's all-sky clearness index via the Ångström–Prescott relation, not from
@@ -25,6 +25,19 @@ Three honest caveats, so you can judge fitness for your own use:
   — Lima and Cape Verde are the clearest cases, both ~35–40% over — and low in
   the perpetually-overcast Sichuan basin. This is a known limitation of
   satellite-derived sunshine (Kothe et al. 2017, *Remote Sensing* 9(5), 429).
+- **⚠ Sunshine hours above roughly 60°N inland are unreliable and read high.**
+  Do not use them. Above the Arctic Circle the model returns a median of about
+  2,130 h/yr, which is *higher* than the 55–66° band beneath it and higher than
+  much of the mid-latitudes; 42 of the 73 destinations there exceed 2,000 h. The
+  split points at the cause: the maritime sub-Arctic looks right (Iceland
+  ~1,320, coastal Norway ~1,425) while the dry continental Arctic inflates badly
+  (Canada ~2,280, Alaska ~2,060, Russia ~1,950), most likely because snow and
+  sea-ice albedo defeat the clearness retrieval. This group is also effectively
+  unvalidated: exactly **one** of those 73 destinations has a published figure
+  to check against, and the two high-latitude cities that do have one are both
+  ~450 h over (Tromsø 1,713 vs 1,265; Iqaluit 1,936 vs 1,477). The 212 h error
+  above is therefore a mid-latitude figure and does not describe the far north.
+  Temperature, rainfall and the Sunshine Score's warmth term are unaffected.
 - **`sea_temp_c` is a single year (2024)**, not a normal like everything else.
 - **`climate` and `destination_type` are rule-based classifications**, not
   source fields. `sunshine_score_*` is an opinionated index, not a measurement.
