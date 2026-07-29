@@ -19,8 +19,8 @@ Three honest caveats, so you can judge fitness for your own use:
 
 - **`annual_sunshine_hours` is modelled, not observed.** It comes from NASA
   POWER's all-sky clearness index via the Ångström–Prescott relation, not from
-  a sunshine recorder. Validated against 404 published national met-service
-  figures: **r = 0.92, mean absolute error 212 h/yr, bias +22 h/yr.** It reads
+  a sunshine recorder. Validated against 410 published national met-service
+  figures: **r = 0.92, mean absolute error 212 h/yr, bias +24 h/yr.** It reads
   high where persistent low marine cloud or dust sits under a satellite's view
   — Lima and Cape Verde are the clearest cases, both ~35–40% over — and low in
   the perpetually-overcast Sichuan basin. This is a known limitation of
@@ -48,8 +48,14 @@ Join key across files: `iata` (the destination's primary airport).
 
 The rule is one primary airport per metro, but nine metros genuinely run two
 airports far enough apart to sit in different climate cells, so they hold two
-rows sharing a `city` value. Deduplicate on the first of each pair if you need
-one row per place:
+rows sharing a `city` value.
+
+Since the 2026.11 edition you do not have to know which nine: the
+`duplicate_of_iata` column (`duplicateOfIata` in the JSON) is empty on every
+primary and carries the primary's code on each second row, so filtering it
+empty gives exactly one row per place — 3,824 of the 3,833. Both rows are real;
+each holds the climate of its own coordinates, which is why a pair rarely
+agrees exactly. The nine pairs are:
 
 `LHR`/`SEN` London · `GLA`/`PIK` Glasgow · `MEL`/`MEB` Melbourne ·
 `SEA`/`PAE` Seattle · `YUL`/`YHU` Montréal · `KEF`/`RKV` Reykjavík ·
@@ -108,7 +114,22 @@ pass those credits along and you're done.
 
 ## Versioning
 
-This mirror is the **2026.10 edition**. It adds a **midday UV index** — peak
+This mirror is the **2026.11 edition**. It adds one column,
+**`duplicate_of_iata`** (`duplicateOfIata` in the JSON), described under *Nine
+metros appear twice* above: the nine second airports now name their primary in
+the data itself instead of only in this README. It is additive — no existing
+value, column order or page `url` changed, and the climate values are identical
+to 2026.10.
+
+It also **corrects the published accuracy figures**. Earlier editions said the
+modelled sunshine hours had been checked against 404 met-service cities with a
+bias of +22 h/yr; re-running the validation against the current data gives
+**410 cities** and a bias of **+24 h/yr**. Correlation (0.92) and mean absolute
+error (212 h/yr) are unchanged. The old figures were correct when written and
+drifted as destination names were corrected in 2026.09 and 2026.10, which let
+more cities match the reference list.
+
+The **2026.10 edition** added a **midday UV index** — peak
 value per destination in `sunshine-atlas-destinations.csv`, and per
 destination-month in `sunshine-atlas-monthly-climate.csv` and the JSON — on the
 WHO scale, derived from the same NASA POWER climatology as everything else.

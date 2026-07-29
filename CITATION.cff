@@ -5,7 +5,7 @@ title: "Sunshine Atlas: monthly sunshine scores and climate normals for 3,833 fl
 authors:
   - name: "Sunshine Atlas"
     website: "https://sunshineatlas.com"
-version: "2026.10"
+version: "2026.11"
 date-released: "2026-07-27"
 url: "https://sunshineatlas.com/data/"
 repository-artifact: "https://github.com/Flightmussy/sunshine-atlas-data"
