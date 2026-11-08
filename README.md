@@ -6,7 +6,8 @@ Monthly **0–100 Sunshine Scores**, day/night temperatures, rainfall and sea
 temperature for **3,833 destinations worldwide** — every one of them served by
 its own airport (one primary airport per metro area, so London is Heathrow and
 Southend rather than all five fields; see *Nine metros appear twice* below).
-Built from NASA POWER's 2001–2020 climate normals, not forecasts.
+Built from NASA POWER's 2001–2020 climate normals, corrected to the WMO
+1991–2020 station normals, with rainfall blended with CHELSA V2.1; not forecasts.
 
 ## Provenance
 
@@ -19,23 +20,26 @@ Four honest caveats, so you can judge fitness for your own use:
 
 - **`annual_sunshine_hours` is modelled, not observed.** It comes from NASA
   POWER's all-sky clearness index via the Ångström–Prescott relation, not from
-  a sunshine recorder. Validated against 410 published national met-service
-  figures: **r = 0.92, mean absolute error 212 h/yr, bias +24 h/yr.** It reads
+  a sunshine recorder; since 2026.11.1 its two coefficients are fitted to measured
+  sunshine. Validated against the WMO 1991–2020 climate normals at 517 stations
+  near an atlas airport (mean absolute error 185 h/yr) and 410 published national
+  met-service figures: **r = 0.92, mean absolute error 190 h/yr, bias −31 h/yr.** It reads
   high where persistent low marine cloud or dust sits under a satellite's view
   — Lima and Cape Verde are the clearest cases, both ~35–40% over — and low in
   the perpetually-overcast Sichuan basin. This is a known limitation of
   satellite-derived sunshine (Kothe et al. 2017, *Remote Sensing* 9(5), 429).
 - **⚠ Sunshine hours above roughly 60°N inland are unreliable and read high.**
   Do not use them. Above the Arctic Circle the model returns a median of about
-  2,130 h/yr, which is *higher* than the 55–66° band beneath it and higher than
-  much of the mid-latitudes; 42 of the 73 destinations there exceed 2,000 h. The
-  split points at the cause: the maritime sub-Arctic looks right (Iceland
-  ~1,320, coastal Norway ~1,425) while the dry continental Arctic inflates badly
-  (Canada ~2,280, Alaska ~2,060, Russia ~1,950), most likely because snow and
+  2,140 h/yr, which is *higher* than the 55–66° band beneath it (~1,820) and higher
+  than much of the mid-latitudes; 44 of the 73 destinations there exceed 2,000 h.
+  The split points at the cause: the maritime sub-Arctic reads modestly high
+  (Iceland ~1,490 against 1,326 measured at Reykjavík, coastal Norway ~1,540) while
+  the dry continental Arctic inflates badly (Canada ~2,230, Alaska ~1,940, Russia
+  ~1,980), most likely because snow and
   sea-ice albedo defeat the clearness retrieval. This group is also effectively
   unvalidated: exactly **one** of those 73 destinations has a published figure
   to check against, and the two high-latitude cities that do have one are both
-  ~450 h over (Tromsø 1,713 vs 1,265; Iqaluit 1,936 vs 1,477). The 212 h error
+  ~500 h over (Tromsø 1,805 vs 1,265; Iqaluit 1,985 vs 1,477). The 190 h error
   above is therefore a mid-latitude figure and does not describe the far north.
   Temperature, rainfall and the Sunshine Score's warmth term are unaffected.
 - **`sea_temp_c` is a single year (2024)**, not a normal like everything else.
@@ -113,9 +117,13 @@ journalism and apps. Credit **Sunshine Atlas** and link to
 > Sunshine Atlas (2026). *Monthly sunshine scores and climate normals for
 > 3,833 destinations.* sunshineatlas.com/data/
 
-Upstream sources: temperature, rainfall and sunshine from
+Upstream sources: temperature and sunshine from
 [NASA POWER](https://power.larc.nasa.gov/) climatology, January 2001 –
-December 2020 (CC BY 4.0); places & populations ©
+December 2020 (CC BY 4.0), the day highs, night lows and the sunshine
+coefficients corrected to the WMO 1991–2020 climate normals (NOAA NCEI
+accession 0253808; used to fit and measure, never redistributed); rainfall a
+blend of [CHELSA](https://chelsa-climate.org/) V2.1 (Karger et al., WSL,
+1981–2010, CC0) and NASA POWER; places & populations ©
 [GeoNames](https://www.geonames.org/) & OurAirports (CC BY), with manual
 name/population corrections where an airport's host municipality differs from
 the destination it serves (island, region and metro labels use commonly-quoted
@@ -127,7 +135,30 @@ pass those credits along and you're done.
 
 ## Versioning
 
-This mirror is the **2026.11 edition**. It adds one column,
+This mirror is the **2026.11.1 edition**: the climate values checked against
+the WMO 1991–2020 climate normals measured at the stations within 15 km and
+150 m of an atlas airport, and corrected. No column, row or page `url` changed.
+
+- **Day highs and night lows.** The highs read 0.85 °C too cold and the lows
+  0.70 °C too warm (a 50 km grid cell has a narrower day than an airport's open
+  ground), most in the tropics. They are corrected by an amount that runs
+  smoothly with latitude (highs +1.8 °C near the equator and +0.5 to +0.7 °C
+  further out, lows −0.4 to −0.8 °C), fitted by cross-validation by station: the
+  error fell from 1.45 to 1.16 °C for the highs (1,453 stations) and from 1.48
+  to 1.40 °C for the lows.
+- **Rainfall** is 0.94 × (0.8 × CHELSA V2.1 + 0.2 × NASA POWER): CHELSA's
+  1981–2010 climatology at about 1 km resolves the rain shadows and mountain
+  slopes a 50 km cell cannot. Against 1,450 stations the monthly error fell
+  from 19.7 to 12.2 mm and the annual from 201 to 117 mm, with no bias.
+- **Sunshine hours** use Ångström–Prescott coefficients fitted to measured
+  sunshine, 0.19 and 0.62 instead of FAO-56's 0.25 and 0.50, which overstated
+  about 100 h/yr, most in the dry belts: the error fell from 212 to 190 h/yr
+  against the 410 published figures and from 225 to 185 h/yr at the WMO stations.
+- Every Sunshine Score, best month and destination type is recomputed from the
+  corrected values; the best month changed for 1,448 destinations, many of which
+  had near ties between neighbouring months.
+
+The **2026.11 edition** added one column,
 **`duplicate_of_iata`** (`duplicateOfIata` in the JSON), described under *Nine
 metros appear twice* above: the nine second airports now name their primary in
 the data itself instead of only in this README. It is additive — no existing
