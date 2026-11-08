@@ -24,10 +24,11 @@ Four honest caveats, so you can judge fitness for your own use:
   sunshine. Validated against the WMO 1991–2020 climate normals at 517 stations
   near an atlas airport (mean absolute error 185 h/yr) and 410 published national
   met-service figures: **r = 0.92, mean absolute error 190 h/yr, bias −31 h/yr.** It reads
-  high where persistent low marine cloud or dust sits under a satellite's view
-  — Lima and Cape Verde are the clearest cases, both ~35–40% over — and low in
-  the perpetually-overcast Sichuan basin. This is a known limitation of
-  satellite-derived sunshine (Kothe et al. 2017, *Remote Sensing* 9(5), 429).
+  high under persistent low marine cloud — Lima is the clearest case, 2,191 h
+  against a published 1,230 h — and across Indonesia, where 15 of the 25 WMO
+  stations read more than 25% over (median +30%); it reads low in the Gulf
+  (Dubai −15%, Bahrain −19%). This is a known limitation of satellite-derived
+  sunshine (Kothe et al. 2017, *Remote Sensing* 9(5), 429).
 - **⚠ Sunshine hours above roughly 60°N inland are unreliable and read high.**
   Do not use them. Above the Arctic Circle the model returns a median of about
   2,140 h/yr, which is *higher* than the 55–66° band beneath it (~1,820) and higher
@@ -157,6 +158,11 @@ the WMO 1991–2020 climate normals measured at the stations within 15 km and
 - Every Sunshine Score, best month and destination type is recomputed from the
   corrected values; the best month changed for 1,448 destinations, many of which
   had near ties between neighbouring months.
+- The sunshine caveat above was checked again against the corrected values:
+  Lima reads 78% over its published figure, not the 35–40% earlier editions
+  gave; Cape Verde, which has no measured figure in either reference, is no
+  longer named; the overcast Sichuan basin no longer reads low (Chongqing +3%,
+  Nanchong −4%); the largest regional over-read is now Indonesia's.
 
 The **2026.11 edition** added one column,
 **`duplicate_of_iata`** (`duplicateOfIata` in the JSON), described under *Nine
